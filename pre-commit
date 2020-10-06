@@ -1,0 +1,18 @@
+#!/bin/sh
+git_diff=$(git diff --cached --name-only)
+
+if [[ $git_diff == *"README"* ]]
+then
+	echo "README.md changed. Rebuilding summary."
+
+	py_file=$(git rev-parse --show-toplevel)/summary.py
+	py_script=$(curl -sSL https://raw.githubusercontent.com/daniellanner/readme-summary/main/collect_readme_summary.py)
+	echo $py_script >> $py_file
+
+	python $py_file $(git rev-parse --show-toplevel)/README.md
+	rm $py_file
+
+	echo $(git rev-parse --show-toplevel)/README.md >> .commit
+else
+	echo "No README added"
+fi
