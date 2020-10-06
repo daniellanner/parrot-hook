@@ -1,9 +1,9 @@
 #!/bin/sh
 if [ -e .commit ]
-    then
+	then
 	to_commit="`cat .commit`"
 	rm .commit
 
-    git add $to_commit
-    git commit --amend -C HEAD --no-verify
+	git add $to_commit
+	git commit --amend -C HEAD --no-verify
 fi
