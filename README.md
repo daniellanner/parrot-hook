@@ -1,8 +1,10 @@
-# readme summary
+# Readme Summary
 
 This repository contains a python script to automatically edit the root level `README.md` file of a repository and a combination of pre-commit and post-commit git hooks to automise the process. This `README.md` has been created this way.
 
 This text is before the generated table.
+
+## Table of Content
 
 <!-- start generated table -->
 [How to install](how-to-install/README.md)  
