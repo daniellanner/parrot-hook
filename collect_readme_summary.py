@@ -39,7 +39,7 @@ def read_file_summary(file_to_read):
                 break
 
 
-def main(root_file, commit_hash):
+def main(root_file):
     # generate collection of all table entries based on README.md in subdirectories
     for root, _, files in os.walk(os.path.dirname(root_file)):
         for current_file in files:
@@ -68,9 +68,8 @@ def main(root_file, commit_hash):
         new_file_content += START_TABLE
 
         new_file_content += 'auto generated table'
-        if len(commit_hash):
-            new_file_content += ' from commit '
-            new_file_content += commit_hash
+        if len(commit_hash) > 0:
+            new_file_content += f' from commit {commit_hash}\non {commit_date} at {commit_time}'
         new_file_content += '\n'
 
         for it in FileSummary.collection:
@@ -95,8 +94,12 @@ if __name__ == '__main__':
         sys.exit()
 
     commit_hash = ''
+    commit_date = ''
+    commit_time = ''
 
-    if len(sys.argv) > 2:
+    if len(sys.argv) > 4:
         commit_hash = sys.argv[2]
+        commit_date = sys.argv[3]
+        commit_time = sys.argv[4]
 
-    main(root_file, commit_hash)
+    main(root_file)
