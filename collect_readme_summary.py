@@ -68,7 +68,7 @@ def main(root_file):
         new_file_content += START_TABLE
 
         for it in FileSummary.collection:
-            rel_path = os.path.relpath(it.file_path, os.path.dirname(root_file))
+            rel_path = os.path.relpath(it.file_path, os.path.dirname(root_file)).replace('\\', '/')
             new_file_content += f"[{it.topic_name}]({rel_path})  \n{it.summary}  \n\n"
 
         new_file_content += END_TABLE
