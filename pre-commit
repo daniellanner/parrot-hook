@@ -14,7 +14,7 @@ then
 	powershell Invoke-WebRequest https://raw.githubusercontent.com/daniellanner/readme-summary/main/collect_readme_summary.py -OutFile $py_file
 
 	# execute and remove python script
-	python $py_file $base_readme $commit_info
+	python $py_file $base_readme '$commit_info'
 	rm $py_file
 
 	# .commit is handled in post-commit hook
