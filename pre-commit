@@ -3,16 +3,22 @@ git_diff=$(git diff --cached --name-only)
 
 if [[ $git_diff == *"README"* ]]
 then
-	echo "README.md changed. Rebuilding summary."
+	echo "README.md changed, rebuilding summary."
 
-	py_file=$(git rev-parse --show-toplevel)/summary.py
-	py_script=$(curl -sSL https://raw.githubusercontent.com/daniellanner/readme-summary/main/collect_readme_summary.py)
-	echo $py_script >> $py_file
+	base_readme=$(git rev-parse --show-toplevel)/README.md
 
-	python $py_file $(git rev-parse --show-toplevel)/README.md
+	# download python script from repo as raw
+	# alternatively download the script from https://github.com/daniellanner/readme-summary
+	py_file=$(git rev-parse --show-toplevel)/.tmp_readme_summary.py
+	powershell Invoke-WebRequest https://raw.githubusercontent.com/daniellanner/readme-summary/main/collect_readme_summary.py -OutFile $py_file
+
+	# execute and remove python script
+	python $py_file $base_readme
 	rm $py_file
 
-	echo $(git rev-parse --show-toplevel)/README.md >> .commit
+	# .commit is handled in post-commit hook
+	# adds all entries to the current commit
+	echo $base_readme >> .commit
 else
 	echo "No README added"
 fi
