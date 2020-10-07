@@ -5,13 +5,13 @@ This repository contains a python script to automatically edit the root level `R
 This text is before the generated table.
 
 <!-- start generated table -->
-[How to install](how-to-install\README.md)  
+[How to install](how-to-install/README.md)  
 
 In your local git repository locate the folder `.git/hooks/` and copy the files `pre-commit` and `post-commit`.  
 
-[How to use](how-to-use\README.md)  
+[How to use](how-to-use/README.md)  
 
-The script walks over the repository and collects the `h2 Introduction` segment of all `README.md` files and creates a table of them in the root level `README.md` file.  
+The script walks over the repository, collects the `h2 Introduction` segment of all `README.md` files and creates a content table in the root level `README.md` file.  
 
 <!-- end generated table -->
 

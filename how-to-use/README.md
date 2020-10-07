@@ -4,7 +4,7 @@ In case of repositories with a collection of tools or submodules this script cre
 
 ## Introduction
 
-The script walks over the repository and collects the `h2 Introduction` segment of all `README.md` files and creates a table of them in the root level `README.md` file.
+The script walks over the repository, collects the `h2 Introduction` segment of all `README.md` files and creates a content table in the root level `README.md` file.
 
 ## Further options
 
