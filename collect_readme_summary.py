@@ -9,9 +9,10 @@ class FileSummary(NamedTuple):
     file_path: str
     summary: str
 
+    collection = []  # static
+
 
 def read_file_summary(file_to_read):
-    print(file_to_read)
     with open(file_to_read, 'r') as file:
         data = file.read()
 
@@ -34,54 +35,57 @@ def read_file_summary(file_to_read):
                 while summary.endswith('#') or summary.endswith(' ') or summary.endswith('\n'):
                     summary = summary[:-1]
 
-                summary_list.append(FileSummary(topic_name, file_path, summary))
+                FileSummary.collection.append(FileSummary(topic_name, file_path, summary))
                 break
 
 
-if len(sys.argv) < 2:
-    print('No README.md was passed as argument.')
-    sys.exit()
+def main(root_file):
+    # generate collection of all table entries based on README.md in subdirectories
+    for root, _, files in os.walk(os.path.dirname(root_file)):
+        for current_file in files:
+            if os.path.basename(current_file) == 'README.md' and root != root_file:
+                read_file_summary(os.path.join(root, current_file))
 
-root_file = sys.argv[1]
+    # write generated table into given README.md
+    with open(root_file, 'r+') as file:
+        root_file_content = file.read()
 
-if not root_file.endswith('README.md'):
-    print('Passed argument is not \'README.md\'.')
-    sys.exit()
+        START_TABLE = '<!-- start generated table -->\n'
+        END_TABLE = '<!-- end generated table -->\n'
 
-summary_list = []
+        table_split = root_file_content.split(START_TABLE)
+        before_split = table_split[0]
 
-# generate collection of all table entries based on README.md in subdirectories
-for root, dirs, files in os.walk(os.path.dirname(root_file)):
-    for current_file in files:
-        if os.path.basename(current_file) == 'README.md' and root != root_file:
-            read_file_summary(os.path.join(root, current_file))
+        table_split = root_file_content.split(END_TABLE)
+        after_split = ''
+        if len(table_split) > 1:
+            after_split = table_split[1]
 
-# write generated table into given README.md
-with open(root_file, 'r+') as file:
-    root_file_content = file.read()
+        file.seek(0)
+        file.truncate()
 
-    START_TABLE = '<!-- start generated table -->\n'
-    END_TABLE = '<!-- end generated table -->\n'
+        new_file_content = before_split
+        new_file_content += START_TABLE
 
-    table_split = root_file_content.split(START_TABLE)
-    before_split = table_split[0]
+        for it in FileSummary.collection:
+            rel_path = os.path.relpath(it.file_path, os.path.dirname(root_file))
+            new_file_content += f"[{it.topic_name}]({rel_path})  \n{it.summary}  \n\n"
 
-    table_split = root_file_content.split(END_TABLE)
-    after_split = ''
-    if len(table_split) > 1:
-        after_split = table_split[1]
+        new_file_content += END_TABLE
+        new_file_content += after_split
 
-    file.seek(0)
-    file.truncate()
+        file.write(new_file_content)
 
-    new_file_content = before_split
-    new_file_content += START_TABLE
 
-    for it in summary_list:
-        rel_path = os.path.relpath(it.file_path, os.path.dirname(root_file))
-        new_file_content += '[{}]({})  \n{}  \n\n'.format(it.topic_name, rel_path, it.summary)
+if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print("No README.md was passed as argument.")
+        sys.exit()
 
-    new_file_content += END_TABLE
-    new_file_content += after_split
+    root_file = sys.argv[1]
 
-    file.write(new_file_content)
+    if not root_file.endswith('README.md'):
+        print("Passed argument is not 'README.md'.")
+        sys.exit()
+
+    main(root_file)
