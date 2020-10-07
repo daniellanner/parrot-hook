@@ -9,7 +9,7 @@ This text is before the generated table.
 <!-- start generated table -->
 [How to install](how-to-install/README.md)  
 
-In your local git repository locate the folder `.git/hooks/` and copy the files `pre-commit` and `post-commit`.  
+In your local git repository locate the folder `.git/hooks/`. Copy the `pre-commit` and `post-commit` from this repository into the hooks folder.  
 
 [How to use](how-to-use/README.md)  
 

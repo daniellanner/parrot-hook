@@ -4,7 +4,7 @@ This README explains how to set up the script. Note that this text does not appe
 
 ## Introduction
 
-In your local git repository locate the folder `.git/hooks/` and copy the files `pre-commit` and `post-commit`.
+In your local git repository locate the folder `.git/hooks/`. Copy the `pre-commit` and `post-commit` from this repository into the hooks folder.
 
 ## git hooks
 
