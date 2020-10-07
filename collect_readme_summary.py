@@ -39,7 +39,7 @@ def read_file_summary(file_to_read):
                 break
 
 
-def main(root_file):
+def main(root_file, commit_hash):
     # generate collection of all table entries based on README.md in subdirectories
     for root, _, files in os.walk(os.path.dirname(root_file)):
         for current_file in files:
@@ -67,6 +67,12 @@ def main(root_file):
         new_file_content = before_split
         new_file_content += START_TABLE
 
+        new_file_content += 'auto generated table'
+        if len(commit_hash):
+            new_file_content += ' from commit '
+            new_file_content += commit_hash
+        new_file_content += '\n'
+
         for it in FileSummary.collection:
             rel_path = os.path.relpath(it.file_path, os.path.dirname(root_file)).replace('\\', '/')
             new_file_content += f"[{it.topic_name}]({rel_path})  \n{it.summary}  \n\n"
@@ -88,4 +94,9 @@ if __name__ == '__main__':
         print("Passed argument is not 'README.md'.")
         sys.exit()
 
-    main(root_file)
+    commit_hash = ''
+
+    if len(sys.argv) > 2:
+        commit_hash = sys.argv[2]
+
+    main(root_file, commit_hash)

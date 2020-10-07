@@ -6,6 +6,7 @@ then
 	echo "README.md changed, rebuilding summary."
 
 	base_readme=$(git rev-parse --show-toplevel)/README.md
+	commit_info=$(git log -1 --pretty="%H%n%ci") # hash \n date
 
 	# download python script from repo as raw
 	# alternatively download the script from https://github.com/daniellanner/readme-summary
@@ -13,7 +14,7 @@ then
 	powershell Invoke-WebRequest https://raw.githubusercontent.com/daniellanner/readme-summary/main/collect_readme_summary.py -OutFile $py_file
 
 	# execute and remove python script
-	python $py_file $base_readme
+	python $py_file $base_readme $commit_info
 	rm $py_file
 
 	# .commit is handled in post-commit hook
