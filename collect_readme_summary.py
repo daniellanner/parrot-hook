@@ -67,9 +67,8 @@ def main(root_file):
         new_file_content = before_split
         new_file_content += START_TABLE
 
-        new_file_content += 'auto generated table'
         if len(commit_hash) > 0:
-            new_file_content += f' from commit {commit_hash}\non {commit_date} at {commit_time}'
+            new_file_content += f'generated from commit {commit_hash}\non {commit_date} at {commit_time}\n'
         new_file_content += '\n'
 
         for it in FileSummary.collection:

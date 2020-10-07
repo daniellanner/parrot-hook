@@ -7,8 +7,9 @@ This text is before the generated table.
 ## Table of Content
 
 <!-- start generated table -->
-auto generated table from commit 7ecac77afb097dc0d105dcb6b8171fb5fdd6e694
-on 2020-10-07 at 18:48:03
+generated from commit d534e5646cbb31b81097393587985475ac317845
+on 2020-10-07 at 19:01:37
+
 [How to install](how-to-install/README.md)  
 
 In your local git repository locate the folder `.git/hooks/`. Copy the `pre-commit` and `post-commit` from this repository into the hooks folder.  
