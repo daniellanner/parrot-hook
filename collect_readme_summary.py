@@ -39,12 +39,44 @@ def read_file_summary(file_to_read):
                 break
 
 
+def resolve_relative_links(root_file):
+    root_dir = os.path.dirname(root_file)
+
+    for i in range(len(FileSummary.collection)):
+        it = FileSummary.collection[i]
+        rel_path = os.path.relpath(os.path.dirname(it.file_path), root_dir).replace('\\', '/')
+
+        start_idx = 0
+
+        while start_idx > -1:
+            start_idx = it.summary.find("](", start_idx)
+            if start_idx < 0:
+                continue
+
+            start_idx += 2
+            end_idx = it.summary.find(")", start_idx)
+            if end_idx < 0:
+                continue
+
+            link_body = it.summary[start_idx:end_idx]
+
+            if link_body.startswith("https://"):
+                continue
+
+            updated_link_body = rel_path + "/" + link_body
+            updated_summary = it.summary[:start_idx] + updated_link_body + it.summary[end_idx:]
+            FileSummary.collection[i] = FileSummary.collection[i]._replace(summary=updated_summary)
+
+
 def main(root_file):
     # generate collection of all table entries based on README.md in subdirectories
     for root, _, files in os.walk(os.path.dirname(root_file)):
         for current_file in files:
             if os.path.basename(current_file) == 'README.md' and root != root_file:
                 read_file_summary(os.path.join(root, current_file))
+
+    # post processing
+    resolve_relative_links(root_file)
 
     # write generated table into given README.md
     with open(root_file, 'r+') as file:
