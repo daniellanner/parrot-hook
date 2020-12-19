@@ -7,8 +7,6 @@ This text is before the generated table.
 ## Table of Content
 
 <!-- start generated table -->
-generated from commit 6554664e328f16aaf634d27ceca597cf2acb1434  
-on 2020-10-07 at 19:03:40
 
 [How to install](how-to-install/README.md)  
 
@@ -17,6 +15,13 @@ In your local git repository locate the folder `.git/hooks/`. Copy the `pre-comm
 [How to use](how-to-use/README.md)  
 
 The script walks over the repository, collects the `h2 Introduction` segment of all `README.md` files and creates a content table in the root level `README.md` file.  
+
+[Relative Links](test-links/relative/README.md)  
+![](test-links/relative/img/test-img.jpg)
+[()]
+()[]
+][)()]
+[mytest](https://hello.com)  
 
 <!-- end generated table -->
 
