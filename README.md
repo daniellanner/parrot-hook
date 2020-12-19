@@ -7,8 +7,8 @@ This text is before the generated table.
 ## Table of Content
 
 <!-- start generated table -->
-generated from commit 00decfa41a6108b5fc2b1f6e0f3ce59c6ba71817  
-on 2020-12-19 at 17:06:14
+generated from commit f4697dc772eb34567a7eb0b32ae49ae9e949580d  
+on 2020-12-19 at 17:07:38
 
 [How to install](how-to-install/README.md)  
 
@@ -39,5 +39,5 @@ This text is after the generated table.
 
 ## Limitations
 - This entire thing was hacked together and not properly tested yet so expect some bugs.
-- Relative links in the generated table are not resolved.
 - use of **powershell** sh command limits platform to Windows, to work around the issue download python script to your machine and call directly from pre-commit file
+- requires python to be installed and "python" cmd command to be set in PATH
