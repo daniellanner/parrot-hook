@@ -1,4 +1,5 @@
-# Readme Summary
+![](readme-header.png)
+# Parrot Hook
 
 This repository contains a python script to automatically edit the root level `README.md` file of a repository and a combination of pre-commit and post-commit git hooks to automise the process. This `README.md` has been created this way.
 
@@ -7,8 +8,8 @@ This text is before the generated table.
 ## Table of Content
 
 <!-- start generated table -->
-generated from commit f4697dc772eb34567a7eb0b32ae49ae9e949580d  
-on 2020-12-19 at 17:07:38
+generated from commit 6d4733aac897f419ab5ad2e8025bc36338934733  
+on 2020-12-19 at 17:11:42
 
 [How to install](how-to-install/README.md)  
 
